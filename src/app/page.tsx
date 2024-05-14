@@ -1,95 +1,103 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import { ThemedInputWithIcon } from '@/components/InputWithIcon/ThemedInputWithIcon';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Center,
+  FormControl,
+  FormLabel,
+  Heading,
+  Image,
+  Text,
+  VStack
+} from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { FaLock } from 'react-icons/fa';
+import { MdMail } from 'react-icons/md';
+
 
 export default function Home() {
+  const router = useRouter();
+  const [matchId, setMatchId] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleCreateMatch = () => {
+    // Crear un nuevo partido
+    // Luego redirigir a la página de partidos
+    const newMatchId = '12345';
+    router.push(`/pichanga/${newMatchId}`);
+  };
+
+  const handleViewMatches = () => {
+    router.push(`/pichanga/me`);
+  };
+
+  const handleLogin = () => {
+    // Aquí puedes implementar la lógica de autenticación
+    console.log('Iniciando sesión...');
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <Center px={4} w="100%" h="100vh" backgroundColor='green.500'>
+      <Image 
+        src="/soccer-field.svg" 
+        alt="Soccer Field"
+        pos='fixed'
+        width='100%'
+        objectFit="cover"
+        opacity={0.3}
+      />
+      <Card w={["full", "full", "40vw"]} p={8} bgColor="gray.100" borderRadius='xl' boxShadow='lg'>
+        <CardHeader>
+          <VStack spacing={4} align="center">
+            <Heading as="h1" size="2xl" fontWeight="bold" textAlign="center">
+              MiPichanga ⚽️
+            </Heading>
+            <Text fontSize="md" textAlign="center">
+              Con MiPichanga podrás organizar partidos de fútbol de manera fácil y divertida. Aquí puedes crear tus propios partidos, unirte a partidos existentes e incluso ver tus próximos encuentros.
+            </Text>
+          </VStack>
+        </CardHeader>
+
+        <CardBody p={2}>
+          <FormControl id="login">
+            <FormLabel>Email</FormLabel>
+            <ThemedInputWithIcon
+              icon={MdMail}
+              type="email"
+              placeholder='Email'
+              value={email}
+              variant="solid"
+              onChange={(e) => setEmail(e.target.value)}
             />
-          </a>
-        </div>
-      </div>
+            <FormLabel mt={4}>Contraseña</FormLabel>
+            <ThemedInputWithIcon
+              icon={FaLock}
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              variant="solid"
+              showButton
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            <VStack mt={4}>
+              <Button w='full' colorScheme="green" onClick={handleLogin}>
+                Crear Pichanga
+              </Button>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+              <Button w='full' colorScheme="green" variant="ghost" onClick={handleViewMatches}>
+                Ver mis Pichangas
+              </Button>
+            </VStack>
+          </FormControl>
+        </CardBody>
+    </Card>
+    </Center>
   );
 }
