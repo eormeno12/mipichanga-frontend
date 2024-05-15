@@ -11,10 +11,14 @@
   "dependencies": {
     "@chakra-ui/next-js": "^2.2.0",
     "@chakra-ui/react": "^2.8.2",
+    "axios": "^1.6.8",
+    "classnames": "^2.5.1",
+    "moment": "^2.30.1",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.2.1"
+    "react-icons": "^5.2.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",

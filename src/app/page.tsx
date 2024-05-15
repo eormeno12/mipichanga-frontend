@@ -1,6 +1,7 @@
 'use client'
 
 import { ThemedInputWithIcon } from '@/components/InputWithIcon/ThemedInputWithIcon';
+import { AuthContext } from '@/contexts/AuthContext';
 import {
   Button,
   Card,
@@ -12,34 +13,63 @@ import {
   Heading,
   Image,
   Text,
+  useToast,
   VStack
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaLock } from 'react-icons/fa';
 import { MdMail } from 'react-icons/md';
+import { FRONTEND_ROUTES } from '../../config';
+import { validateEmailAndPassword } from '@/utils/validate';
 
 
 export default function Home() {
+  const toast = useToast();
+
+  const { login, userData, loading } = useContext(AuthContext);
+
   const router = useRouter();
-  const [matchId, setMatchId] = useState('');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleCreateMatch = () => {
-    // Crear un nuevo partido
-    // Luego redirigir a la página de partidos
-    const newMatchId = '12345';
-    router.push(`/pichanga/${newMatchId}`);
+  useEffect(() => {
+    if(userData && !loading) {
+      router.push(FRONTEND_ROUTES.PROFILE);
+    }
+  }, []);
+
+  const isDataValid = () => {
+    const errors = validateEmailAndPassword(email, password);
+    if (errors.length > 0) {
+      toast({
+        title: 'Error',
+        description: errors.join('. '),
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+      return false;
+    }
+
+    return true;
+  }
+
+  const handleCreateMatch = async () => {
+    await handleLogin(FRONTEND_ROUTES.MATCHES);
   };
 
-  const handleViewMatches = () => {
-    router.push(`/pichanga/me`);
+  const handleViewMatches = async () => {
+    await handleLogin(FRONTEND_ROUTES.PROFILE);
   };
 
-  const handleLogin = () => {
-    // Aquí puedes implementar la lógica de autenticación
-    console.log('Iniciando sesión...');
+  const handleLogin = async (to: FRONTEND_ROUTES) => {
+    if(isDataValid()) {
+      await login(email, password, () => {
+        router.push(to);
+      });
+    }
   };
 
   return (
@@ -65,7 +95,7 @@ export default function Home() {
         </CardHeader>
 
         <CardBody p={2}>
-          <FormControl id="login">
+          <FormControl>
             <FormLabel>Email</FormLabel>
             <ThemedInputWithIcon
               icon={MdMail}
@@ -87,7 +117,7 @@ export default function Home() {
             />
 
             <VStack mt={4}>
-              <Button w='full' colorScheme="green" onClick={handleLogin}>
+              <Button w='full' colorScheme="green" onClick={handleCreateMatch}>
                 Crear Pichanga
               </Button>
 
