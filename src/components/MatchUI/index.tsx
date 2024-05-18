@@ -4,13 +4,24 @@ import { MatchContext } from '@/contexts/MatchContext';
 import { Box, Flex, Grid, Heading, Text, VStack } from '@chakra-ui/react';
 import moment from 'moment';
 import 'moment/locale/es';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Team } from './Team';
 import { Pitch } from './Team/Pitch';
+import { FRONTEND_ROUTES } from '../../../config';
+import { useRouter } from 'next/navigation';
 
 export function MatchUI() {
   moment.locale('es');
-  const { matchData } = useContext(MatchContext);
+
+  const router = useRouter();
+  const { matchData, loading } = useContext(MatchContext);
+
+  useEffect(() => {
+    if(!loading && !matchData){
+      router.push(FRONTEND_ROUTES.NOT_FOUND);
+    }
+  }, [loading, matchData]);
+
   return (
     <>
       { matchData ? <VStack w='100vw' h='100%' minH='100vh' bgColor='green.600' px={4} py={8}>

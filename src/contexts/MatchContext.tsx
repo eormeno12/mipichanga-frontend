@@ -3,6 +3,7 @@ import { Match, Player } from "@/api/matches/matches.model";
 import { validatePlayerIsNotEmpty } from "@/utils/validate";
 import { useToast } from "@chakra-ui/react";
 import { ReactNode, createContext, useEffect, useState } from "react";
+import { set } from "zod";
 
 interface MatchContextProps {
   matchData: Match | null;
@@ -63,12 +64,10 @@ function MatchProvider({matchId, children}: {matchId: string, children: ReactNod
 
     const fetchMatchData = async () => {
       try {
-        setLoading(true);
         const match = await getMatch(matchId); 
         setMatchData(match);
         setHomePlayers(getPlayersList(match.home.lineup, match.home.players!));
         setAwayPlayers(getPlayersList(match.away.lineup, match.away.players!));
-        setLoading(false);
       } catch (error) {
         errorToast('Error', 'Ocurrió un error al cargar la pichanga.');
       }
@@ -79,11 +78,15 @@ function MatchProvider({matchId, children}: {matchId: string, children: ReactNod
         await fetchMatchData();
       }
 
+      setLoading(true);
       fetchMatch();
+      setLoading(false);
     }, []);
 
     const reloadMatch = async () => {
+      setLoading(true);
       await fetchMatchData();
+      setLoading(false);
     }
 
     const addPlayer = async (team: 'home' | 'away', player: Player) => {
@@ -95,8 +98,8 @@ function MatchProvider({matchId, children}: {matchId: string, children: ReactNod
         return;
       }
 
+      setLoading(true);
       try {
-        setLoading(true);
         await addPlayerToMatch(matchId, matchData, team, player.name, player.pos);
       
         await fetchMatchData();
@@ -104,6 +107,8 @@ function MatchProvider({matchId, children}: {matchId: string, children: ReactNod
       } catch (error) {
         errorToast('Error', 'Ocurrió un error al agregar el jugador.');
       }
+
+      setLoading(false);
     }
   
     return (

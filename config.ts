@@ -9,4 +9,5 @@ export enum FRONTEND_ROUTES {
   HOME = '/',
   PROFILE = '/perfil',
   MATCHES = '/pichanga',
+  NOT_FOUND = '/404',
 }
