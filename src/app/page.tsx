@@ -38,23 +38,7 @@ export default function Home() {
     if(userData && !loading) {
       router.push(FRONTEND_ROUTES.PROFILE);
     }
-  }, []);
-
-  const isDataValid = () => {
-    const errors = validateEmailAndPassword(email, password);
-    if (errors.length > 0) {
-      toast({
-        title: 'Error',
-        description: errors.join('. '),
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-      return false;
-    }
-
-    return true;
-  }
+  }, [userData, loading]);
 
   const handleCreateMatch = async () => {
     await handleLogin(FRONTEND_ROUTES.MATCHES);
@@ -65,11 +49,9 @@ export default function Home() {
   };
 
   const handleLogin = async (to: FRONTEND_ROUTES) => {
-    if(isDataValid()) {
-      await login(email, password, () => {
-        router.push(to);
-      });
-    }
+    await login(email, password, () => {
+      router.push(to);
+    });
   };
 
   return (

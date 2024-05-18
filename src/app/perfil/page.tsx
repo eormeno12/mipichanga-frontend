@@ -120,7 +120,6 @@ function ProfileUI() {
   const router = useRouter();
   const { userData, userLogout} = useContext(AuthContext);
   moment.locale('es');
-  console.log(userData);
 
   const renderMatches = () => {
     const handleMatchClick = (matchId: string) => {

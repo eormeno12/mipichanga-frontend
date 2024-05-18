@@ -1,5 +1,5 @@
 import { Field, FieldLocation } from "@/api/fields/fields.model";
-import { CreateMatch, Team } from "@/api/matches/matches.model";
+import { CreateMatch, Player, Team } from "@/api/matches/matches.model";
 import moment from "moment";
 
 export function validateEmailAndPassword(email: string, password: string) {
@@ -67,4 +67,15 @@ export function validateMatchIsNotEmpty(match: CreateMatch) {
     const homeErrors = validateTeamIsNotEmpty(match.home);
     const awayErrors = validateTeamIsNotEmpty(match.away);
     return [...errors, ...fieldErrors, ...homeErrors, ...awayErrors];
+}
+
+export function validatePlayerIsNotEmpty(player: Player) {
+    const errors = [];
+    if (!player.name) {
+        errors.push("Nombre es requerido");
+    }
+    if (!player.pos) {
+        errors.push("Posición es requerida");
+    }
+    return errors;
 }

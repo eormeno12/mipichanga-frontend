@@ -1,5 +1,6 @@
 import { getUser, loginWithEmailAndPassword, logout } from "@/api/users";
 import { User } from "@/api/users/users.model";
+import { validateEmailAndPassword } from "@/utils/validate";
 import { useToast } from "@chakra-ui/react";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
@@ -24,30 +25,41 @@ function AuthProvider({children}: {children: ReactNode}): JSX.Element {
 
     useEffect(() => {
       const fetchUserData = async () => {
-        setLoading(true);
         const user = await getUser();
         setUserData(user);
-        setLoading(false);
       }
   
+      setLoading(true);
       fetchUserData();
+      setLoading(false);
     }, []);
+
+    const errorToast = (title: string, description: string) => {
+      toast({
+        title,
+        description,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
 
     const login = async (email: string, password: string, callback: () => void) => {
       setLoading(true);
+      
+      const errors = validateEmailAndPassword(email, password);
+      if (errors.length > 0) {
+        errorToast('Error', errors.join('. '));
+        setLoading(false);
+        return;
+      }
+
       try{
         const user = await loginWithEmailAndPassword(email, password);
-        console.log(user);
         setUserData(user);
         callback();
       }catch(error){
-        toast({
-          title: 'Error',
-          description: "Verifica tus credenciales.",
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
+        errorToast('Error', "Ocurrió un error al iniciar sesión. Por favor, intenta nuevamente.");
       }
       setLoading(false);
     }

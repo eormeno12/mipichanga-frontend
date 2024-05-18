@@ -5,13 +5,11 @@ interface PlayerProps {
   name: string;
 }
 
-const Player: React.FC<PlayerProps> = ({ name }) => {
+export function PlayerUI ({ name }: PlayerProps) {
   return (
-    <TextWithIcon width='100%' icon={FaUser} fontSize='lg' mr={4}>
+    <TextWithIcon width='100%' icon={FaUser} fontSize='lg' textOverflow='ellipsis'>
       {name || "-"}
     </TextWithIcon>
   );
 };
 
-
-export { Player };

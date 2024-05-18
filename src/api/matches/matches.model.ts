@@ -7,6 +7,8 @@ export const PlayerSchema = z.object({
   pos: z.number(),
 });
 
+export type Player = z.infer<typeof PlayerSchema>;
+
 export const TeamSchema = z.object({
   name: z.string(),
   lineup: z.string(),
