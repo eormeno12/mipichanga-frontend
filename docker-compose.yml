@@ -8,8 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - mipichanga-network
 
