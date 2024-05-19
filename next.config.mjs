@@ -1,24 +1,23 @@
 /** @type {import('next').NextConfig} */
-import { env } from './config';
 
 const nextConfig = {
   async rewrites() {
     return [
       {
         source: `/users/:path*`,
-        destination: `${env.users_api}/users/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_USERS_API}/users/:path*`,
       },
       {
         source: `/auth/:path*`,
-        destination: `${env.users_api}/auth/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_USERS_API}/auth/:path*`,
       },
       {
         source: `/matches/:path*`,
-        destination: `${env.matches_api}/matches/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_MATCHES_API}/matches/:path*`,
       },
       {
         source: `/fields/:path*`,
-        destination: `${env.fields_api}/fields/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_FIELDS_API}/fields/:path*`,
       },
     ];
   },
