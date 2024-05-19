@@ -3,6 +3,9 @@ version: '3.3'
 services:
   mipichanga-frontend:
     image: mipichanga-frontend
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 80:80
     extra_hosts:
