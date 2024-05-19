@@ -15,9 +15,9 @@ COPY . .
 # Build the Next.js application for production
 RUN npm run build
 # Set the environment variable to run the Next.js application in production mode
-ENV NEXT_PUBLIC_USERS_API=http://host.docker.internal:3001
-ENV NEXT_PUBLIC_FIELDS_API=http://host.docker.internal:3002
-ENV NEXT_PUBLIC_MATCHES_API=http://host.docker.internal:3003
+ENV NEXT_PUBLIC_USERS_API=http://users-api:3001
+ENV NEXT_PUBLIC_FIELDS_API=http://fields-api:3002
+ENV NEXT_PUBLIC_MATCHES_API=http://matches-api:3003
 
 # Expose the port that the application will run on
 EXPOSE 80

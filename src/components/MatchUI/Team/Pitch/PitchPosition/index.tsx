@@ -63,9 +63,8 @@ function PitchPosition({ player, pos, color, teamSide }: PitchPositionProps): JS
     const player = {
       _id: "",
       name: inputName,
-      pos: pos,
+      pos: pos + 1,
     };
-    console.log(player);
     await addPlayer(teamSide, player);
   }
 
@@ -146,7 +145,7 @@ function PitchPosition({ player, pos, color, teamSide }: PitchPositionProps): JS
         </PopoverContent>
       </Popover> 
       <Text fontSize={['xs', 'sm', 'sm', 'sm']} variant='unstyled' textAlign='center' color='white' maxW='100%' fontWeight='bold'>
-        {player || `Jugador ${pos + 1}`}
+        {player || `Jugador ${pos}`}
       </Text>
     </Flex>
   );

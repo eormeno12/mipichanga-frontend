@@ -36,7 +36,7 @@ function MatchProvider({matchId, children}: {matchId: string, children: ReactNod
       const playersName = Array(numPlayers).fill('');
   
       for(let i = 0; i < players.length; i++) {
-        playersName[players[i].pos] += players[i].name;
+        playersName[players[i].pos - 1] += players[i].name;
       }
   
       return playersName;
