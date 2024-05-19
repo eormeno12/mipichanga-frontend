@@ -74,7 +74,7 @@ export function validatePlayerIsNotEmpty(player: Player) {
     if (!player.name) {
         errors.push("Nombre es requerido");
     }
-    if (!player.pos) {
+    if (player.pos == undefined || player.pos == null) {
         errors.push("Posición es requerida");
     }
     return errors;

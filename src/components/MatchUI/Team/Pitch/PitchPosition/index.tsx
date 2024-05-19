@@ -60,11 +60,13 @@ function PitchPosition({ player, pos, color, teamSide }: PitchPositionProps): JS
   }
 
   const handleAddPlayer = async () => {
-    await addPlayer(teamSide, {
+    const player = {
       _id: "",
       name: inputName,
-      pos
-    });
+      pos: pos,
+    };
+    console.log(player);
+    await addPlayer(teamSide, player);
   }
 
   const handleJoin = async () => {

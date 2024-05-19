@@ -91,8 +91,9 @@ function MatchProvider({matchId, children}: {matchId: string, children: ReactNod
 
     const addPlayer = async (team: 'home' | 'away', player: Player) => {
       if(!matchData) return;
-  
+      
       const errors = validatePlayerIsNotEmpty(player);
+      console.log(errors);
       if(errors.length > 0) {
         errorToast('Error', 'El nombre del jugador no puede estar vacío.');
         return;

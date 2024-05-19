@@ -16,11 +16,11 @@ export function MatchUI() {
   const router = useRouter();
   const { matchData, loading } = useContext(MatchContext);
 
-  useEffect(() => {
-    if(!loading && !matchData){
-      router.push(FRONTEND_ROUTES.NOT_FOUND);
-    }
-  }, [loading, matchData]);
+  // useEffect(() => {
+  //   if(!loading && !matchData){
+  //     router.push(FRONTEND_ROUTES.NOT_FOUND);
+  //   }
+  // }, [loading, matchData]);
 
   return (
     <>

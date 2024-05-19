@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  mipichanga-frontend:
+    image: eormenoutec/mipichanga-frontend
+    ports:
+      - 80:80
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
