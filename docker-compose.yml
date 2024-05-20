@@ -10,6 +10,10 @@ services:
       - 80:80
     networks:
       - mipichanga-network
+    environment:
+      - NEXT_PUBLIC_USERS_API=http://users-api:3001
+      - NEXT_PUBLIC_FIELDS_API=http://fields-api:3002
+      - NEXT_PUBLIC_MATCHES_API=http://matches-api:3003
 
 networks:
   mipichanga-network:
