@@ -1,4 +1,5 @@
 import { users_api } from "..";
+import { env } from "../../../config";
 import { UserSchema } from "./users.model";
 
 export async function loginWithEmailAndPassword(email: string, password: string) {
@@ -16,7 +17,8 @@ export async function logout() {
 export async function getUser() {
   try {
     const res = await users_api.get("/users/me");
-    const user = UserSchema.parse(res.data)
+    const user = UserSchema.parse(res.data);
+    console.log(env);
     return user;
   } catch (error) {
     console.error(error);
