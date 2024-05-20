@@ -8,8 +8,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
-    networks:
-      - mipichanga-network
-networks:
-  mipichanga-network:
-    driver: bridge
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
